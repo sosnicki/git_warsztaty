@@ -3,7 +3,7 @@ from pathlib import Path
 import numpy as np
 from PIL import Image as PILImage
 from scipy.ndimage import laplace
-
+import config
 
 class Image:
     image: PILImage
@@ -20,19 +20,39 @@ class Image:
 
     @property
     def sharpness(self) -> float:
-        # Konwersja obrazu na skalę szarości
-        image = self.image.convert("L")
+        if config.SHARPNESS_TYPE == 'laplace':
+            # Konwersja obrazu na skalę szarości
+            image = self.image.convert("L")
 
-        # Konwersja obrazu do tablicy numpy
-        image_array = np.array(image, dtype=np.float32)
+            # Konwersja obrazu do tablicy numpy
+            image_array = np.array(image, dtype=np.float32)
 
-        # Obliczenie Laplacjana
-        laplacian = laplace(image_array)
+            # Obliczenie Laplacjana
+            laplacian = laplace(image_array)
 
-        # Obliczenie wariancji Laplacjana
-        sharpness = laplacian.var()
+            # Obliczenie wariancji Laplacjana
+            sharpness = laplacian.var()
 
-        return sharpness
+            return sharpness
+        elif config.SHARPNESS_TYPE == 'fft':
+            # Wczytanie obrazu w skali szarości
+            image = self.image.convert("L")
+
+            # Konwersja do numpy
+            image_array = np.array(image, dtype=np.float32)
+
+            # Transformata Fouriera
+            fft = np.fft.fft2(image_array)
+            fft_shift = np.fft.fftshift(fft)
+            magnitude_spectrum = np.abs(fft_shift)
+
+            # Obliczenie sumy wysokich częstotliwości
+            high_freq_magnitude = magnitude_spectrum[magnitude_spectrum > np.median(magnitude_spectrum)]
+            sharpness = np.sum(high_freq_magnitude)
+
+            return sharpness
+        else:
+            raise Exception('Invalid sharpness type')
 
     def histogram(self, path: str | Path):
         # TODO: Funkcja tworzy histogram i zapisuje go w ścieżce path

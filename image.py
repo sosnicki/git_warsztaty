@@ -75,8 +75,3 @@ class Image:
         self.image.resize(self.image.width/config.IMAGE_RESIZE, self.image/config.IMAGE_RESIZE)        
         self.image.save("obrazek", config.IMAGE_FORRMAT)
 
-        # TODO: Funkcja zapisuje obraz z self.image pod ścieżką path
-        # jakość formatu JPEG i poziom kompresji PNG powinien być w konfiguracji
-        ...
-
-

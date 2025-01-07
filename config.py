@@ -1,0 +1,1 @@
+SHARPNESS_TYPE = 'fft'

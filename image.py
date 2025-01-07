@@ -75,3 +75,5 @@ class Image:
         # TODO: Funkcja zapisuje obraz z self.image pod ścieżką path
         # jakość formatu JPEG i poziom kompresji PNG powinien być w konfiguracji
         ...
+
+

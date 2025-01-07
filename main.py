@@ -32,6 +32,7 @@ def main():
     if args.histogram:
         image.histogram(args.histogram)
 
+
     # Zastosowanie filtru
     if args.filter:
         if args.filter == "blur":

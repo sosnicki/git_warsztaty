@@ -56,7 +56,24 @@ class Image:
 
     def histogram(self, path: str | Path):
         # TODO: Funkcja tworzy histogram i zapisuje go w ścieżce path
-        ...
+        # Wyświetlenie histogramu dla obrazu kolorowego
+        plt.figure(figsize=(10, 5))
+        plt.subplot(1, 2, 1)
+        plt.title("Histogram obrazu kolorowego")
+        plt.plot(r_hist, color='red', label='Czerwony')
+        plt.plot(g_hist, color='green', label='Zielony')
+        plt.plot(b_hist, color='blue', label='Niebieski')
+        plt.legend()
+
+        # Wyświetlenie histogramu dla obrazu monochromatycznego
+        plt.subplot(1, 2, 2)
+        plt.title("Histogram obrazu monochromatycznego")
+        plt.plot(gray_hist, color='black', label='Gray')
+        plt.legend()
+
+        # Wyświetlenie wykresów
+        plt.tight_layout()
+        plt.savefig(path)
 
     def blur(self):
         # TODO: Funkcja rozmywa obraz metodą np. Gaussa i podmienia zmienną self.image

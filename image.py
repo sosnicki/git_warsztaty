@@ -2,8 +2,10 @@ from pathlib import Path
 
 import numpy as np
 from PIL import Image as PILImage
+from PIL import ImageFilter
 from scipy.ndimage import laplace
 import config
+
 
 class Image:
     image: PILImage
@@ -59,8 +61,7 @@ class Image:
         ...
 
     def blur(self):
-        # TODO: Funkcja rozmywa obraz metodą np. Gaussa i podmienia zmienną self.image
-        ...
+        self.image = self.image.filter(ImageFilter.BLUR)
 
     def sharpen(self):
         # TODO: Funkcja wyostrza obraz i podmienia zmienną self.image
@@ -74,5 +75,3 @@ class Image:
         # TODO: Funkcja zapisuje obraz z self.image pod ścieżką path
         # jakość formatu JPEG i poziom kompresji PNG powinien być w konfiguracji
         ...
-
-
